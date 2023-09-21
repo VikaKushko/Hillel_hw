@@ -1,7 +1,10 @@
-let firstNumber = parseFloat(prompt('Введите первое число'));
-let secondNumber = parseFloat(prompt('Введите второе число'));
-let mathematicalOperation = prompt('Что нужно сделать (add, sub, mult, div)?');
+'use strict';
+
+const firstNumber = parseFloat(prompt('Введите первое число'));
+const secondNumber = parseFloat(prompt('Введите второе число'));
+const mathematicalOperation = prompt('Что нужно сделать (add, sub, mult, div)?');
 let operationSymbol;
+let result;
 
 if(mathematicalOperation === 'add'){
     result = firstNumber + secondNumber;
