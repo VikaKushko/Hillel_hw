@@ -7,10 +7,9 @@ alert(admin);
 
 
 // Task #2
-let planetName = 'Земля';
-let visitorName = 'Вика';
-console.log(planetName);
-console.log(visitorName);
+const planetName = 'Земля';
+const visitorName = 'Вика';
+
 
 
 
