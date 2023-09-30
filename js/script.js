@@ -1,26 +1,30 @@
 'use strict';
 
 // Task #1
-let name = 'Джон';
-let admin = name;
-alert(admin);
-
+let visitor = {};
+visitor.name = 'John';
+visitor.surname = 'Smith';
+visitor.name = 'Pete';
+delete visitor.name;
+console.log(visitor);
 
 // Task #2
-const planetName = 'Земля';
-const visitorName = 'Вика';
-
-
-
+const user = {
+    name: "John"
+};
+// Це працюватиме?
+user.name = "Pete";
+console.log(user);
+// Да,все будет работать, консоль выведет "Pete"
 
 // Task #3
-let result = '10' + 10;
-console.log(result);
-console.log(typeof result);
-// В консоли ответ 1010. JavaScript автоматически конвертирует число 10 в строку и осуществляет конкатенацию двух строк
-
-
-
+let salaries = {
+    John: 100,
+    Ann: 160,
+    Pete: 130
+}
+let sum = salaries.Ann + salaries.John + salaries.Pete;
+console.log(sum);
 
 
 
