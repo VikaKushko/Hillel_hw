@@ -1,6 +1,6 @@
 'use strict';
 
-// Task #1
+// Task#1
 let visitor = {};
 visitor.name = 'John';
 visitor.surname = 'Smith';
