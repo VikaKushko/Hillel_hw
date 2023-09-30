@@ -1,7 +1,10 @@
 'use strict';
 
-Boolean(Number('10')) + 1; // 2
-'sub' + Number(false); // sub0
-16 * '91'  //1456
-true-70  // -69
-Номер(1 + String(1)) + 1 // Будет ошибка
+let num = 1;
+num += 12;
+num -= 14;
+num *= 5;
+num /= 7;
+num++;
+num--;
+alert(num);
