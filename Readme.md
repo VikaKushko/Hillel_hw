@@ -1,9 +1,14 @@
-Напишіть скрипт, який рахує кількість секунд за годину.
+Переписати код нижче з використанням конструкції switch…case
 
-Запросити у користувача кількість годин
+let numOrStr = prompt('input number or string');
+console.log(numOrStr)
 
-Порахувати скільки секунд у цій кількості годин
-
-Записати обчислене значення у змінну
-
-Вивести цю змінну користувачеві у спливаючому вікні
+if(numOrStr === null) {
+console.log('ви скасували')
+} else if( numOrStr.trim() === '' ) {
+console.log('Empty String');
+} else if ( isNaN( +numOrStr ) ) {
+console.log(' number is Ba_NaN')
+} else {
+console.log('OK!')
+}
