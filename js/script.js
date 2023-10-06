@@ -1,8 +1,8 @@
 'use strict';
 
-let birthYear = prompt('Введіть рік народження ');
-let city = prompt('В якому місті Ви живете? ');
-let sport = prompt('Який улюблений вид спорту?');
+const birthYear = prompt('Введіть рік народження ');
+const city = prompt('В якому місті Ви живете? ');
+const sport = prompt('Який улюблений вид спорту?');
 let message;
 let sportMessage = '';
 let cityMessage = '';
