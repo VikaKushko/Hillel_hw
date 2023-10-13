@@ -1,4 +1,3 @@
-'use strict';
 
 // Task№1
 let a = Number(prompt('Введите число'));
