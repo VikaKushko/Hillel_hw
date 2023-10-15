@@ -16,8 +16,4 @@
 
 Результат виклику функції записати в змінну та вивести користувачеві через alert()
 
-P.S. Для зведення в ступінь можна використовувати
 
-Math.pow() — https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/pow
-
-Оператор ** приклад (2 ** 8) - зводимо число 2 до 8-го ступеня
