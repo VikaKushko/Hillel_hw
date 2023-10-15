@@ -7,7 +7,6 @@ function exponentiationNumber(number, dagree = 2) {
   return result;
 }
 
-const n = +prompt("Enter number");
 const d = +prompt("Enter number");
 const r = exponentiationNumber(n, d);
 
