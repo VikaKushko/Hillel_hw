@@ -1,17 +1,15 @@
-function exponentiationNumber(number, dagree = 2) {
-  if (Number.isNaN(number) || Number.isNaN(dagree)) {
-    return "some error";
-  }
+function generateKey(length, characters) {
+  let result = "";
+  const charactersLength = characters.length;
 
-  const result = number ** dagree;
+  for (let i = 0; i <= length; i++) {
+    const randomIndex = Math.floor(Math.random() * charactersLength);
+    result += characters.charAt(randomIndex);
+  }
   return result;
 }
 
-const d = +prompt("Enter number");
-const r = exponentiationNumber(n, d);
+const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-if (Number.isNaN(r)) {
-  alert(r);
-} else {
-  alert(r);
-}
+const key = generateKey(16, characters);
+alert(key);
