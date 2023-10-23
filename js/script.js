@@ -11,14 +11,14 @@ function mainFunction(callback) {
 alert(mainFunction(exponentiation));
 
 // Task 2
-const multiplay = function (n, d) {
-  return n * d;
+const multiplay = function (n, m) {
+  return n * m;
 };
 
 function mainFunction(callback) {
-  const num = prompt("Enter number");
-  const degree = prompt("Enter degree");
-  return callback(num, degree);
+  const numOne = prompt("Enter number");
+  const numTwo = prompt("Enter number");
+  return callback(numOne, numTwo);
 }
 alert(mainFunction(multiplay));
 
@@ -28,9 +28,9 @@ const division = function (n, d) {
 };
 
 function mainFunction(callback) {
-  const num = prompt("Enter number");
-  const degree = prompt("Enter degree");
-  return callback(num, degree);
+  const numOne = prompt("Enter number");
+  const numTwo = prompt("Enter number");
+  return callback(numOne, numTwo);
 }
 alert(mainFunction(division));
 
@@ -40,8 +40,8 @@ const modulo = function (n, d) {
 };
 
 function mainFunction(callback) {
-  const num = prompt("Enter number");
-  const degree = prompt("Enter degree");
-  return callback(num, degree);
+  const numOne = prompt("Enter number");
+  const numTwo = prompt("Enter number");
+  return callback(numOne, numTwo);
 }
 alert(mainFunction(modulo));
