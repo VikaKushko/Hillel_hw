@@ -1,47 +1,105 @@
-// Task 1
-const exponentiation = function (n, d) {
-  return n ** d;
-};
+// some
 
-function mainFunction(callback) {
-  const num = prompt("Enter number");
-  const degree = prompt("Enter degree");
-  return callback(num, degree);
+const arr = [1, 2, 3, 4, 5];
+function some(num, callback) {
+  for (let i = 0; i < num.length; i++) {
+    if (callback(num[i], i, num)) {
+      return true;
+    }
+  }
+  return false;
 }
-alert(mainFunction(exponentiation));
 
-// Task 2
-const multiplay = function (n, m) {
-  return n * m;
-};
+const hasEven = some(arr, (element) => element % 2 === 0);
+console.log(hasEven);
 
-function mainFunction(callback) {
-  const numOne = prompt("Enter number");
-  const numTwo = prompt("Enter number");
-  return callback(numOne, numTwo);
+// every
+const arr = [1, 2, 3, 4, 5];
+
+function checkCondition(element) {
+  return element > 10;
 }
-alert(mainFunction(multiplay));
 
-// Task 3
-const division = function (n, d) {
-  return n / d;
-};
-
-function mainFunction(callback) {
-  const numOne = prompt("Enter number");
-  const numTwo = prompt("Enter number");
-  return callback(numOne, numTwo);
+function every(arra, condition) {
+  for (let i = 0; i < arra.length; i++) {
+    if (!condition(arra[i])) {
+      return false;
+    }
+  }
+  return true;
 }
-alert(mainFunction(division));
 
-// Task 4
-const modulo = function (n, d) {
-  return n % d;
-};
+const a = every(arr, checkCondition);
+console.log(a);
 
-function mainFunction(callback) {
-  const numOne = prompt("Enter number");
-  const numTwo = prompt("Enter number");
-  return callback(numOne, numTwo);
+// includes
+const arr = [1, 2, 3, 4, 5];
+
+function includes(num, condition) {
+  for (let i = 0; i < num.length; i++) {
+    if (num[i] === condition) {
+      return true;
+    }
+  }
+  return false;
 }
-alert(mainFunction(modulo));
+const a = includes(arr, 3);
+console.log(a);
+
+// find
+const arr = [1, 2, 3, 4, 5];
+
+function find(num, condition) {
+  for (let i = 0; i < num.length; i++) {
+    if (condition(num[i])) {
+      return num[i];
+    }
+  }
+  return undefined;
+}
+
+const a = find(arr, (element) => element === 5);
+console.log(a);
+
+// findIndex
+const arr = [1, 2, 3, 4, 5];
+
+function findIndex(num, condition) {
+  for (let i = 0; i < num.length; i++) {
+    if (condition(num[i])) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+const a = findIndex(arr, (element) => element === 5);
+console.log(a);
+
+// indexOf
+const arr = [1, 2, 3, 4, 5];
+function indexOf(num, element) {
+  for (let i = 0; i < num.length; i++) {
+    if (num[i] === element) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+const a = indexOf(arr, 1);
+console.log(a);
+
+// lastIndexOf
+const arr = [1, 2, 3, 4, 5];
+function indexOf(num, element) {
+  for (let i = num.length - 1; i >= 0; i--) {
+    if (num[i] === element) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+const a = indexOf(arr, 3);
+console.log(a);
