@@ -1,23 +1,30 @@
-// const num = prompt("Enter");
-// const arrayOfDigits = num.split(" ").map(Number && String);
-//
-// arrayOfDigits.sort();
-// console.log(arrayOfDigits);
-//
-// arrayOfDigits.splice(1, 4);
-// console.log(arrayOfDigits);
+// Task #1
+const getFactorial = (num) => {
+  if (num !== 1) {
+    return num * getFactorial(num - 1);
+  } else {
+    return num;
+  }
+};
 
-function colorOf(r, g, b) {
-  // Convert RGB values to hexadecimal strings and pad them to have 2 characters each
-  const redHex = r.toString(16).padStart(2, "0");
-  const greenHex = g.toString(16).padStart(2, "0");
-  const blueHex = b.toString(16).padStart(2, "0");
+console.log(getFactorial(3));
 
-  // Combine the hexadecimal values with "#" and return the web color code
-  return `#${redHex}${greenHex}${blueHex}`;
-}
+// Task #2
+const pow = (num, degree) => {
+  if (degree === 0) {
+    return 1;
+  }
+  return num * pow(num, degree - 1);
+};
 
-// Test cases
-console.log(colorOf(255, 0, 0)); // Output: "#ff0000"
-console.log(colorOf(0, 111, 0)); // Output: "#006f00"
-console.log(colorOf(1, 2, 3)); // Output: "#010203"
+console.log(pow(2, 3));
+
+// Task #3
+const inte = (a, b) => {
+  if (b === 0) {
+    return a;
+  }
+  return inte(a + 1, b - 1);
+};
+
+console.log(inte(5, 3));
