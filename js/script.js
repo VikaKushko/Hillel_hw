@@ -1,16 +1,56 @@
-const arr = [1, 2, 3, 4, {}, [1, 2, 3], [1, 2, 3], [3, 4, [5, 6, 7]]];
+function counter(number = 0) {
+  let count = number;
+  let increaseCount = 0;
+  let decreaseCount = 0;
+  let valueCount = 0;
 
-function flat(arr) {
-  let res = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (Array.isArray(arr[i])) {
-      res = res.concat(flat(arr[i]));
-    } else {
-      res.push(arr[i]);
-    }
+  function increase() {
+    count++;
+    increaseCount++;
   }
-  return res;
+
+  function decrease() {
+    count--;
+    decreaseCount++;
+  }
+
+  function value() {
+    valueCount++;
+    return count;
+  }
+
+  function getStatistic() {
+    return {
+      increase: increaseCount,
+      decrease: decreaseCount,
+      value: valueCount,
+    };
+  }
+
+  function reset() {
+    count = 0;
+    increaseCount = 0;
+    decreaseCount = 0;
+    valueCount = 0;
+  }
+
+  return {
+    increase,
+    decrease,
+    value,
+    getStatistic,
+    reset,
+  };
 }
 
-console.log(flat(arr));
-console.log(flat(arr));
+const result = counter(7);
+result.increase();
+result.decrease();
+result.increase();
+
+console.log(result.value());
+console.log(result.getStatistic());
+
+result.reset();
+console.log(result.value());
+console.log(result.getStatistic());
