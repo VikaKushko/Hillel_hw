@@ -1,56 +1,26 @@
-function counter(number = 0) {
-  let count = number;
-  let increaseCount = 0;
-  let decreaseCount = 0;
-  let valueCount = 0;
+function bind(fn, context) {
+  return function () {
+    const args = [];
 
-  function increase() {
-    count++;
-    increaseCount++;
-  }
+    for (let i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
 
-  function decrease() {
-    count--;
-    decreaseCount++;
-  }
+    args.context = context;
 
-  function value() {
-    valueCount++;
-    return count;
-  }
-
-  function getStatistic() {
-    return {
-      increase: increaseCount,
-      decrease: decreaseCount,
-      value: valueCount,
-    };
-  }
-
-  function reset() {
-    count = 0;
-    increaseCount = 0;
-    decreaseCount = 0;
-    valueCount = 0;
-  }
-
-  return {
-    increase,
-    decrease,
-    value,
-    getStatistic,
-    reset,
+    return fn(args);
   };
 }
+function result(args) {
+  const context = args.context;
+  const greeting = args[0];
+  console.log(`${greeting}, ${context.firstName} ${context.lastName}`);
+}
 
-const result = counter(7);
-result.increase();
-result.decrease();
-result.increase();
+const someObj = {
+  firstName: "Ihor",
+  lastName: "Cat",
+};
 
-console.log(result.value());
-console.log(result.getStatistic());
-
-result.reset();
-console.log(result.value());
-console.log(result.getStatistic());
+const boundGreet = bind(result, someObj);
+boundGreet("Hello");
