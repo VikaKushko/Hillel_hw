@@ -1,26 +1,13 @@
-function bind(fn, context) {
-  return function () {
-    const args = [];
+const list = document.querySelectorAll("li");
 
-    for (let i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-
-    args.context = context;
-
-    return fn(args);
-  };
-}
-function result(args) {
-  const context = args.context;
-  const greeting = args[0];
-  console.log(`${greeting}, ${context.firstName} ${context.lastName}`);
+for (const item of list) {
+  console.log(item.textContent);
 }
 
-const someObj = {
-  firstName: "Ihor",
-  lastName: "Cat",
-};
+console.log(`Количество елементов ${list.length}`);
 
-const boundGreet = bind(result, someObj);
-boundGreet("Hello");
+const arr = [];
+for (const item of list) {
+  arr.push(item.textContent);
+}
+console.log(arr);
