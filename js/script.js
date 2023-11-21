@@ -1,21 +1,15 @@
-const generateList = (array) => {
-  const list = document.createElement("ul");
+const createTable = () => {
+  const table = document.createElement("table");
 
-  for (const ele of array) {
-    const liElement = document.createElement("li");
+  for (let i = 1; i <= 10; i++) {
+    const tr = table.insertRow();
 
-    if (Array.isArray(ele)) {
-      const attachment = generateList(ele);
-      liElement.appendChild(attachment);
-    } else {
-      liElement.textContent = ele;
+    for (let j = 1; j <= 10; j++) {
+      const td = tr.insertCell();
+      const value = (i - 1) * 10 + j;
+      td.textContent = value;
     }
-
-    list.appendChild(liElement);
   }
-
-  return list;
+  document.body.appendChild(table);
 };
-
-const arr = [1, 2, [1.1, 1.2, 1.3], 3];
-document.body.appendChild(generateList(arr));
+createTable();
