@@ -1,19 +1,21 @@
-const list = document.querySelector("ul");
-const arr = [];
+const generateList = (array) => {
+  const list = document.createElement("ul");
 
-for (const attribute of list.attributes) {
-  arr.push(attribute.value);
-}
+  for (const ele of array) {
+    const liElement = document.createElement("li");
 
-console.log(arr);
+    if (Array.isArray(ele)) {
+      const attachment = generateList(ele);
+      liElement.appendChild(attachment);
+    } else {
+      liElement.textContent = ele;
+    }
 
-const list = document.getElementById("ulId");
-const lastElement = list.lastElementChild;
-lastElement.textContent = "Привет меня зовут Vika";
+    list.appendChild(liElement);
+  }
 
-const list = document.getElementById("ulId");
-const firstElement = list.firstElementChild;
-firstElement.setAttribute("data-my-name", "vika");
+  return list;
+};
 
-const list = document.getElementById("ulId");
-list.removeAttribute("data-dog-tail");
+const arr = [1, 2, [1.1, 1.2, 1.3], 3];
+document.body.appendChild(generateList(arr));
