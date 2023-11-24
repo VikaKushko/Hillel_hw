@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const f = document.querySelector("[data-focus-form]");
-  const d = document.querySelector("[data-focus-block]");
+  const name = "img/";
+  const arrImg = ["1.jpeg", "2.jpeg", "3.jpeg, '4.jpeg", "5.jpeg"];
 
-  f.addEventListener("focus", () => {
-    d.style.display = "block";
-  });
+  const random = Math.random() * arrImg.length;
 
-  f.addEventListener("blur", () => {
-    d.style.display = "none";
-  });
+  const result = name + arrImg[random];
+
+  const image = document.querySelector("[data-ren-img]");
+
+  image.src = result;
 });
