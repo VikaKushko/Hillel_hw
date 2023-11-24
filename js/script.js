@@ -1,15 +1,12 @@
-const createTable = () => {
-  const table = document.createElement("table");
+document.addEventListener("DOMContentLoaded", () => {
+  const f = document.querySelector("[data-focus-form]");
+  const d = document.querySelector("[data-focus-block]");
 
-  for (let i = 1; i <= 10; i++) {
-    const tr = table.insertRow();
+  f.addEventListener("focus", () => {
+    d.style.display = "block";
+  });
 
-    for (let j = 1; j <= 10; j++) {
-      const td = tr.insertCell();
-      const value = (i - 1) * 10 + j;
-      td.textContent = value;
-    }
-  }
-  document.body.appendChild(table);
-};
-createTable();
+  f.addEventListener("blur", () => {
+    d.style.display = "none";
+  });
+});
