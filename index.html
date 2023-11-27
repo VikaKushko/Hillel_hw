@@ -3,10 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
+      <link href="css/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <img data-ren-img alt="Випадкове зображення">
+      <img class="picture" src="img/1.jpeg" alt="" data-img>
 
+      <div class="modal" data-modal>
+        <span class="modalclose" data-modal-close >&times;</span>
+        <img class="modalimg" data-modal-img>
+      </div>
+
+    <div class="tabs">
+        <div class="tab" data-tab-id="tabOne">Вкладка 1</div>
+        <div class="tab" data-tab-id="tabTwo">Вкладка 2</div>
+        <div class="tab" data-tab-id="tabThree">Вкладка 3</div>
+    </div>
+
+    <div id="tabOne" class="content">
+        <p>Текст 1</p>
+    </div>
+
+    <div id="tabTwo" class="content">
+        <p>Текст 2</p>
+    </div>
+
+    <div id="tabThree" class="content" >
+        <p>Текст 3</p>
+    </div>
     <script src="./js/script.js"></script>
   </body>
 </html>
+
+
