@@ -12,7 +12,9 @@
         dataList.appendChild(listItem);
       }
     } else {
-      alert("Ошибка");
+      const arror = document.createElement("li");
+      arror.textContent = " данных нет";
+      dataList.appendChild(arror);
     }
   };
 
