@@ -1,47 +1,44 @@
-// // Task1
-document.addEventListener("DOMContentLoaded", function () {
-  const modal = document.querySelector("[data-modal]");
-  const modalImg = document.querySelector("[data-modal-img]");
-  const modalClose = document.querySelector("[data-modal-close]");
-  const galleryImg = document.querySelector("[data-img]");
+(function () {
+  const getData = () => {
+    const dataList = document.querySelector("#dataList");
+    const getList = localStorage.getItem("formData");
 
-  function openModal() {
-    modal.style.display = "block";
-  }
+    if (getList) {
+      const dataUser = JSON.parse(getList);
 
-  function closeModal() {
-    modal.style.display = "none";
-  }
-
-  // Додайте подію кліку на зображення галереї
-  galleryImg.addEventListener("click", function () {
-    modalImg.src = this.src;
-    openModal();
-  });
-
-  modalClose.addEventListener("click", closeModal);
-
-  window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      closeModal();
+      for (const key in dataUser) {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${key}: ${dataUser[key]}`;
+        dataList.appendChild(listItem);
+      }
+    } else {
+      alert("Ошибка");
     }
-  });
-});
+  };
 
-//Task2
-document.addEventListener("DOMContentLoaded", () => {
-  const t = document.querySelector(".tabs");
+  const saveData = (data) => {
+    localStorage.setItem("formData", JSON.stringify(data));
+  };
 
-  t.addEventListener("click", (event) => {
-    const clickTb = event.target.closest(".tab");
+  const formHandler = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const { target } = e;
+    const data = {};
+    target
+      .querySelectorAll("input, textarea, select")
+      .forEach((item) => (data[item.name] = item.value));
+    saveData(data);
+    getData();
+  };
 
-    const getId = clickTb.getAttribute("data-tab-id");
-    const r = document.querySelectorAll(".content");
+  const loadedHandler = () => {
+    const form = document.querySelector("#form");
+    if (form) {
+      form.addEventListener("submit", formHandler);
+    }
+    getData();
+  };
 
-    r.forEach((content) => {
-      content.style.display = "none";
-    });
-
-    document.getElementById(getId).style.display = "block";
-  });
-});
+  document.addEventListener("DOMContentLoaded", loadedHandler);
+})();
