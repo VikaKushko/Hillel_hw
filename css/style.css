@@ -1,0 +1,17 @@
+.taskWrapper, .task {
+    background-color: #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 14px 1px rgba(0, 0, 0, .2);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.taskHeading, .task__heading {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.taskDescription, .task_description {
+    font-size: 16px;
+
+}
