@@ -56,7 +56,15 @@
   };
 
   const modal = {
-    currentId: 0,
+    currentIdd: 0,
+
+    get currentId() {
+      return this.currentIdd;
+    },
+
+    set currentId(value) {
+      this.currentIdd = value;
+    },
 
     save(data) {
       ++this.currentId;
