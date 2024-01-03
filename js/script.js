@@ -1,34 +1,59 @@
 "use strict";
 
-let user = {
-  name: "Vika",
-  surname: "Kushko",
-  age: 10,
+// Task1
+const arr = [1, 2, 3, 4, 5];
+function reverseArray(array) {
+  let index = array.length - 1;
 
-  get fullname() {
-    return `${this.name} ${this.surname}`;
-  },
-};
-console.log(user.fullname);
-
-Object.defineProperty(user, "name", {
-  writable: false,
-});
-Object.defineProperty(user, "age", {
-  enumerable: false,
-});
-
-for (let prop in user) {
-  console.log(prop);
+  return {
+    next() {
+      return index >= 0
+        ? { value: array[index--], done: false }
+        : { done: true };
+    },
+  };
 }
 
-let keys = Object.keys(user);
-console.log(keys);
+const itr = reverseArray(arr);
 
-Object.freeze(user);
+console.log(itr.next().value);
+console.log(itr.next().value);
+console.log(itr.next().value);
 
-try {
-  user.name = "Vlad";
-} catch (error) {
-  console.error(error.message);
+// Task2
+function* generator() {
+  let a = 0,
+    b = 1;
+
+  while (true) {
+    yield a;
+    [a, b] = [b, a + b];
+  }
 }
+
+let generatorFib = generator();
+
+console.log(generatorFib.next().value);
+console.log(generatorFib.next().value);
+console.log(generatorFib.next().value);
+console.log(generatorFib.next().value);
+
+// Task3
+const person = { name: "Vika", age: 18 };
+function key(obj) {
+  const keys = Object.keys(obj);
+  let index = 0;
+
+  return {
+    next: function () {
+      return index < keys.length
+        ? { value: keys[index++], done: false }
+        : { done: true };
+    },
+  };
+}
+
+const itr = key(person);
+
+console.log(itr.next().value);
+console.log(itr.next().value);
