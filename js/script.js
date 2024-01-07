@@ -1,59 +1,58 @@
 "use strict";
 
 // Task1
-const arr = [1, 2, 3, 4, 5];
-function reverseArray(array) {
-  let index = array.length - 1;
-
-  return {
-    next() {
-      return index >= 0
-        ? { value: array[index--], done: false }
-        : { done: true };
-    },
+function Human(name, age) {
+  this.name = name;
+  this.age = age;
+  this.full = function () {
+    console.log("Name = " + this.name + " " + "age = " + this.age);
   };
 }
-
-const itr = reverseArray(arr);
-
-console.log(itr.next().value);
-console.log(itr.next().value);
-console.log(itr.next().value);
 
 // Task2
-function* generator() {
-  let a = 0,
-    b = 1;
+function Car(make, model, yearOfManufacture, numberPlate) {
+  this.make = make;
+  this.model = model;
+  this.yearOfManufacture = yearOfManufacture;
+  this.numberPlate = numberPlate;
 
-  while (true) {
-    yield a;
-    [a, b] = [b, a + b];
-  }
-}
+  this.assignOwner = function (owner) {
+    if (owner.age < 18) {
+      console.log("You should be 18");
+    } else {
+      this.owner = owner;
+    }
+  };
 
-let generatorFib = generator();
+  this.information = function () {
+    console.log(
+      " make = " +
+        this.make +
+        " " +
+        " model = " +
+        this.model +
+        " yearOfManufacture = " +
+        this.yearOfManufacture +
+        " numberPlate = " +
+        this.numberPlate,
+    );
 
-console.log(generatorFib.next().value);
-console.log(generatorFib.next().value);
-console.log(generatorFib.next().value);
-console.log(generatorFib.next().value);
-
-// Task3
-const person = { name: "Vika", age: 18 };
-function key(obj) {
-  const keys = Object.keys(obj);
-  let index = 0;
-
-  return {
-    next: function () {
-      return index < keys.length
-        ? { value: keys[index++], done: false }
-        : { done: true };
-    },
+    if (this.owner) {
+      this.owner.full();
+    } else {
+      console.log("No owner information available");
+    }
   };
 }
 
-const itr = key(person);
+const exeOne = new Human("Vika", 10);
+const exeTwo = new Human("Kate", 10);
 
-console.log(itr.next().value);
-console.log(itr.next().value);
+const carOne = new Car("Toyota", "Camry", 2019, "1234", exeOne);
+const carTwo = new Car("Honda", "Civic", 2020, "5678", exeTwo);
+
+carOne.assignOwner(exeOne);
+carTwo.assignOwner(exeTwo);
+
+carOne.information();
+carTwo.information();
