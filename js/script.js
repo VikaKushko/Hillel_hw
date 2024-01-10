@@ -1,58 +1,102 @@
 "use strict";
 
-// Task1
-function Human(name, age) {
-  this.name = name;
-  this.age = age;
-  this.full = function () {
-    console.log("Name = " + this.name + " " + "age = " + this.age);
+function getStudentConstructor() {
+  const gradeSetting = {
+    min: 0,
+    max: 100,
+  };
+
+  function checkAttendance(lessonVisited, currentLesson, lessonCount) {
+    if (currentLesson >= lessonCount) {
+      throw new Error("Can't add more than 25 lessons");
+    }
+    this.attendance[currentLesson] = lessonVisited;
+  }
+
+  function getAge() {
+    if (typeof this.birth !== "number") {
+      throw new Error("Birth should be a number");
+    }
+    return new Date().getFullYear() - this.birth;
+  }
+
+  function setGrade(grade, currentLesson) {
+    if (typeof grade !== "number") throw new Error("Grade should be number");
+    if (grade > gradeSetting.max || grade < gradeSetting.min)
+      throw new Error("Cant add grade");
+    const currentLessonIndex = currentLesson - 1;
+
+    if (!this.attendance[currentLessonIndex])
+      throw new Error("Cant set grade, student has not attended the lesson ");
+    this.grades[currentLesson - 1] = grade;
+  }
+
+  function summary() {
+    const sumMark = this.grades.reduce(function (sum, grade) {
+      return sum + grade;
+    }, 0);
+    const averageMark = sumMark / this.grades.length;
+    const totalAttendance = this.attendance.reduce(function (sum, isAttended) {
+      return sum + (isAttended ? 1 : 0);
+    }, 0);
+
+    const averageAttendance = totalAttendance / this.attendance.length;
+
+    if (averageMark >= 90 && averageAttendance > 0.9) {
+      return "Молодець!";
+    } else if (averageMark < 90 && averageAttendance < 0.9) {
+      return "Добре, але можна краще ";
+    } else {
+      return "Редиска!";
+    }
+  }
+
+  return function StudentS(name, surname, birth, lessonCount = 3) {
+    let currentLesson = 0;
+    return {
+      name,
+      surname,
+      birth,
+      grades: new Array(lessonCount),
+      attendance: new Array(lessonCount),
+      getAge() {
+        return getAge.call(this);
+      },
+      present() {
+        checkAttendance.call(this, true, currentLesson, lessonCount);
+        ++currentLesson;
+      },
+      absent() {
+        checkAttendance.call(this, false, currentLesson, lessonCount);
+        ++currentLesson;
+      },
+      setGrade(grade) {
+        return setGrade.call(this, grade, currentLesson);
+      },
+      summary() {
+        return summary.call(this);
+      },
+    };
   };
 }
 
-// Task2
-function Car(make, model, yearOfManufacture, numberPlate) {
-  this.make = make;
-  this.model = model;
-  this.yearOfManufacture = yearOfManufacture;
-  this.numberPlate = numberPlate;
-
-  this.assignOwner = function (owner) {
-    if (owner.age < 18) {
-      console.log("You should be 18");
-    } else {
-      this.owner = owner;
-    }
-  };
-
-  this.information = function () {
-    console.log(
-      " make = " +
-        this.make +
-        " " +
-        " model = " +
-        this.model +
-        " yearOfManufacture = " +
-        this.yearOfManufacture +
-        " numberPlate = " +
-        this.numberPlate,
-    );
-
-    if (this.owner) {
-      this.owner.full();
-    } else {
-      console.log("No owner information available");
-    }
-  };
-}
-
-const exeOne = new Human("Vika", 10);
-const exeTwo = new Human("Kate", 10);
-
-const carOne = new Car("Toyota", "Camry", 2019, "1234", exeOne);
-const carTwo = new Car("Honda", "Civic", 2020, "5678", exeTwo);
-
-carOne.assignOwner(exeOne);
-carTwo.assignOwner(exeTwo);
-
-carOne.information();
-carTwo.information();
+const Student = getStudentConstructor();
+const student = new Student("Vika", "Kus", 2005);
+const studentTwo = new Student("Vlad", "dog", 1999);
+student.present();
+student.setGrade(100);
+student.present();
+student.setGrade(90);
+student.present();
+student.setGrade(90);
+studentTwo.present();
+studentTwo.setGrade(100);
+studentTwo.absent();
+studentTwo.present();
+studentTwo.setGrade(100);
+console.log(student);
+console.log(student.getAge());
+console.log(student.summary());
+console.log(studentTwo);
+console.log(studentTwo.getAge());
+console.log(studentTwo.summary());
