@@ -1,102 +1,86 @@
 "use strict";
 
-function getStudentConstructor() {
-  const gradeSetting = {
-    min: 0,
-    max: 100,
-  };
+class Student {
+  constructor(name, surname, birth, lessonCount = 3) {
+    this.gradeSetting = {
+      min: 0,
+      max: 100,
+    };
 
-  function checkAttendance(lessonVisited, currentLesson, lessonCount) {
-    if (currentLesson >= lessonCount) {
-      throw new Error("Can't add more than 25 lessons");
-    }
-    this.attendance[currentLesson] = lessonVisited;
+    this.name = name;
+    this.surname = surname;
+    this.birth = birth;
+    this.grades = new Array(lessonCount);
+    this.attendance = new Array(lessonCount);
+    this.currentLesson = 0;
   }
 
-  function getAge() {
+  getAge() {
     if (typeof this.birth !== "number") {
       throw new Error("Birth should be a number");
     }
     return new Date().getFullYear() - this.birth;
   }
 
-  function setGrade(grade, currentLesson) {
-    if (typeof grade !== "number") throw new Error("Grade should be number");
-    if (grade > gradeSetting.max || grade < gradeSetting.min)
-      throw new Error("Cant add grade");
-    const currentLessonIndex = currentLesson - 1;
-
-    if (!this.attendance[currentLessonIndex])
-      throw new Error("Cant set grade, student has not attended the lesson ");
-    this.grades[currentLesson - 1] = grade;
+  checkAttendance(lessonVisited) {
+    if (this.currentLesson >= this.attendance.length) {
+      throw new Error("Can't add more than 25 lessons");
+    }
+    this.attendance[this.currentLesson] = lessonVisited;
+    this.currentLesson++;
   }
 
-  function summary() {
-    const sumMark = this.grades.reduce(function (sum, grade) {
-      return sum + grade;
-    }, 0);
+  setGrade(grade) {
+    if (typeof grade !== "number") throw new Error("Grade should be a number");
+    if (grade > this.gradeSetting.max || grade < this.gradeSetting.min)
+      throw new Error("Can't add grade");
+    const currentLessonIndex = this.currentLesson - 1;
+
+    if (!this.attendance[currentLessonIndex])
+      throw new Error("Can't set grade, student has not attended the lesson");
+    this.grades[currentLessonIndex] = grade;
+  }
+
+  summary() {
+    const sumMark = this.grades.reduce((sum, grade) => sum + grade, 0);
     const averageMark = sumMark / this.grades.length;
-    const totalAttendance = this.attendance.reduce(function (sum, isAttended) {
-      return sum + (isAttended ? 1 : 0);
-    }, 0);
+    const totalAttendance = this.attendance.reduce(
+      (sum, isAttended) => sum + (isAttended ? 1 : 0),
+      0,
+    );
 
     const averageAttendance = totalAttendance / this.attendance.length;
 
     if (averageMark >= 90 && averageAttendance > 0.9) {
       return "Молодець!";
     } else if (averageMark < 90 && averageAttendance < 0.9) {
-      return "Добре, але можна краще ";
+      return "Добре, але можна краще";
     } else {
       return "Редиска!";
     }
   }
-
-  return function StudentS(name, surname, birth, lessonCount = 3) {
-    let currentLesson = 0;
-    return {
-      name,
-      surname,
-      birth,
-      grades: new Array(lessonCount),
-      attendance: new Array(lessonCount),
-      getAge() {
-        return getAge.call(this);
-      },
-      present() {
-        checkAttendance.call(this, true, currentLesson, lessonCount);
-        ++currentLesson;
-      },
-      absent() {
-        checkAttendance.call(this, false, currentLesson, lessonCount);
-        ++currentLesson;
-      },
-      setGrade(grade) {
-        return setGrade.call(this, grade, currentLesson);
-      },
-      summary() {
-        return summary.call(this);
-      },
-    };
-  };
 }
 
-const Student = getStudentConstructor();
 const student = new Student("Vika", "Kus", 2005);
 const studentTwo = new Student("Vlad", "dog", 1999);
-student.present();
+
+student.checkAttendance(true);
 student.setGrade(100);
-student.present();
+student.checkAttendance(true);
 student.setGrade(90);
-student.present();
+student.checkAttendance(true);
 student.setGrade(90);
-studentTwo.present();
+
+studentTwo.checkAttendance(true);
 studentTwo.setGrade(100);
-studentTwo.absent();
-studentTwo.present();
+studentTwo.checkAttendance(false);
+studentTwo.checkAttendance(true);
 studentTwo.setGrade(100);
+
 console.log(student);
 console.log(student.getAge());
 console.log(student.summary());
+
 console.log(studentTwo);
 console.log(studentTwo.getAge());
 console.log(studentTwo.summary());
