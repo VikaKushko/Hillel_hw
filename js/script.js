@@ -1,20 +1,12 @@
+"use strict";
 function bind(fn, context) {
   return function () {
-    const args = [];
-
-    for (let i = 0; i < arguments.length; i++) {
-      args.push(arguments[i]);
-    }
-
-    args.context = context;
-
-    return fn(args);
+    const args = Array.from(arguments);
+    context.f = fn;
+    const result = context.f(...args);
+    delete context.f;
+    return result;
   };
-}
-function result(args) {
-  const context = args.context;
-  const greeting = args[0];
-  console.log(`${greeting}, ${context.firstName} ${context.lastName}`);
 }
 
 const someObj = {
@@ -22,5 +14,9 @@ const someObj = {
   lastName: "Cat",
 };
 
-const boundGreet = bind(result, someObj);
+const greet = function (message) {
+  console.log(`${message}, ${this.firstName} ${this.lastName}`);
+};
+
+const boundGreet = bind(greet, someObj);
 boundGreet("Hello");
