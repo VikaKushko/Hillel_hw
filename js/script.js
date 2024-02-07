@@ -1,15 +1,27 @@
 "use strict";
 
-function analyzeText(line) {
-  const word = line.toLowerCase().split(" ");
-  const uniqueWords = new Set(word);
-  const uniqueWordsCount = uniqueWords.size;
+function cacheComplexCalculations(calc) {
+  const wmap = new WeakMap();
 
-  return uniqueWordsCount;
+  return function (obj) {
+    if (wmap.has(obj)) {
+      return wmap.get(obj);
+    }
+
+    const result = calc(obj);
+    wmap.set(obj, result);
+    return result;
+  };
 }
 
-const text = "Привет привет меня зовут Вика меня";
-const analysisResult = analyzeText(text);
-console.log(text);
-console.log("Number of unique words:", analysisResult);
-console.log("Unique words:", analysisResult);
+function calc(obj) {
+  return obj.a + obj.b;
+}
+const obj1 = { a: 2, b: 3 };
+const obj2 = { a: 7, b: 3 };
+
+const r = cacheComplexCalculations(calc);
+console.log(r(obj1));
+console.log(r(obj1));
+console.log(r(obj2));
+console.log(r(obj2));
