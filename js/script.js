@@ -1,72 +1,46 @@
 "use strict";
 
-function fetchPost(postId) {
-  return new Promise((resolve, reject) => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Post not found");
-        }
-        return response.json();
-      })
-      .then((post) => resolve(post))
-      .catch((err) => reject(err));
-  });
-}
+const apiUrl =
+  "http://api.openweathermap.org/data/2.5/weather?q=LVIV&units=metric&APPID=5d066958a60d315387d9492393935c19";
 
-function fetchComments(postId) {
-  return new Promise((resolve, reject) => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Comments not found");
-        }
-        return response.json();
-      })
-      .then((comments) => resolve(comments))
-      .catch((err) => reject(err));
-  });
-}
+const xhr = new XMLHttpRequest();
+xhr.open("GET", apiUrl, true);
 
-function displayPost(post) {
-  const postContainer = document.getElementById("postContainer");
-  postContainer.innerHTML = `
-    <div>
-      <h2>${post.title}</h2>
-      <p>${post.body}</p>
-      <button id="commentsButton">Get Comments</button>
-    </div>
-  `;
+xhr.onload = function () {
+  if (xhr.status === 200) {
+    const response = JSON.parse(xhr.responseText);
+    const temperature = response.main.temp;
+    const pressure = response.main.pressure;
+    const description = response.weather[0].description;
+    const humidity = response.main.humidity;
+    const windSpeed = response.wind.speed;
+    const windDirection = response.wind.deg;
+    const iconCode = response.weather[0].icon;
 
-  const commentsButton = document.getElementById("commentsButton");
-  commentsButton.addEventListener("click", function () {
-    fetchComments(post.id)
-      .then((comments) => displayComments(comments))
-      .catch((error) => alert(error.message));
-  });
-}
+    const weather =
+      "<p>Температура: " +
+      temperature +
+      "°C</p>" +
+      "<p>Тиск: " +
+      pressure +
+      " hPa</p>" +
+      "<p>Опис: " +
+      description +
+      "</p>" +
+      "<p>Вологість: " +
+      humidity +
+      "%</p>" +
+      "<p>Швидкість вітру: " +
+      windSpeed +
+      " м/с</p>" +
+      "<p>Напрям вітру: " +
+      windDirection +
+      "°</p>" +
+      '<img src="http://openweathermap.org/img/w/' +
+      iconCode +
+      '.png" alt="Погодний значок">';
 
-function displayComments(comments) {
-  const postContainer = document.getElementById("postContainer");
-  const commentsList = document.createElement("ul");
-  comments.forEach((comment) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = `${comment.name}: ${comment.body}`;
-    commentsList.appendChild(listItem);
-  });
-  postContainer.appendChild(commentsList);
-}
-
-function searchPost() {
-  const postId = document.getElementById("postIdInput").value;
-  if (!postId) {
-    alert("Please enter a post ID.");
-    return;
+    document.getElementById("weather").innerHTML = weather;
   }
-
-  fetchPost(postId)
-    .then((post) => {
-      displayPost(post);
-    })
-    .catch((error) => alert(error.message));
-}
+};
+xhr.send();
