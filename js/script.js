@@ -1,46 +1,33 @@
-"use strict";
-
-const apiUrl =
-  "http://api.openweathermap.org/data/2.5/weather?q=LVIV&units=metric&APPID=5d066958a60d315387d9492393935c19";
-
-const xhr = new XMLHttpRequest();
-xhr.open("GET", apiUrl, true);
-
-xhr.onload = function () {
-  if (xhr.status === 200) {
-    const response = JSON.parse(xhr.responseText);
-    const temperature = response.main.temp;
-    const pressure = response.main.pressure;
-    const description = response.weather[0].description;
-    const humidity = response.main.humidity;
-    const windSpeed = response.wind.speed;
-    const windDirection = response.wind.deg;
-    const iconCode = response.weather[0].icon;
-
-    const weather =
-      "<p>Температура: " +
-      temperature +
-      "°C</p>" +
-      "<p>Тиск: " +
-      pressure +
-      " hPa</p>" +
-      "<p>Опис: " +
-      description +
-      "</p>" +
-      "<p>Вологість: " +
-      humidity +
-      "%</p>" +
-      "<p>Швидкість вітру: " +
-      windSpeed +
-      " м/с</p>" +
-      "<p>Напрям вітру: " +
-      windDirection +
-      "°</p>" +
-      '<img src="http://openweathermap.org/img/w/' +
-      iconCode +
-      '.png" alt="Погодний значок">';
-
-    document.getElementById("weather").innerHTML = weather;
+class AlbumPage {
+  constructor() {
+    this.albumListElement = document.getElementById("albumList");
   }
-};
-xhr.send();
+
+  async renderAlbums() {
+    try {
+      const albums = await this.getAlbums();
+      albums.forEach((album) => {
+        const albumItem = document.createElement("a");
+        albumItem.classList.add("list-group-item", "list-group-item-action");
+        albumItem.href = `album.html?id=${album.id}`;
+        albumItem.textContent = album.title;
+        this.albumListElement.appendChild(albumItem);
+      });
+    } catch (error) {
+      console.error("Error fetching albums:", error);
+    }
+  }
+
+  async getAlbums() {
+    const response = await fetch("https://jsonplaceholder.typicode.com/albums");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const albumPage = new AlbumPage();
+  albumPage.renderAlbums();
+});
